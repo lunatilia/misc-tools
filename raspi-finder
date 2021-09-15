@@ -1,0 +1,36 @@
+#!/bin/sh
+#----- chenge parameters your environment -----#
+# examples:
+#   Your PC's IP address: 192.168.0.100
+#   Search scope: 192.168.0.1 - 192.168.0.254
+#
+#   OWN_NETWORK="192.168.0"
+#   SRCH_START=1
+#   SRCH_END=254
+
+OWN_NETWORK="192.168.0"
+SRCH_START=1
+SRCH_END=254
+#----------------------------------------------#
+
+
+for OCT4 in `seq ${SRCH_START} ${SRCH_END}`
+do
+  ping ${OWN_NETWORK}.${OCT4} -c 1 > /dev/null 2>&1 &
+done
+
+PING_REMAIN=1
+echo -n "Finding Raspberry Pi "
+while [ ${PING_REMAIN} -eq 1 ]; do
+  echo -n "."
+  ps -ef | grep [p]ing > /dev/null 2>&1
+  if [ $? -ne 1 ]; then
+    PING_REMAIN=1
+    sleep 1
+  else
+    PING_REMAIN=0
+    echo
+  fi
+done
+
+arp -n | grep -e b8:27:eb: -e dc:a6:32: -e e4:5f:01 | sort -k 1
