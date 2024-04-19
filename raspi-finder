@@ -33,4 +33,4 @@ while [ ${PING_REMAIN} -eq 1 ]; do
   fi
 done
 
-arp -n | grep -e b8:27:eb: -e dc:a6:32: -e e4:5f:01 | sort -k 1
+arp -n | grep -e 28:cd:c1 -e b8:27:eb: -e d8:3a:dd -e dc:a6:32: -e e4:5f:01 -e 2c:cf:67 | sort -k 1
